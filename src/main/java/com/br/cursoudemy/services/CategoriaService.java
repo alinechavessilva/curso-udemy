@@ -9,13 +9,12 @@ import com.br.cursoudemy.entities.Categoria;
 import com.br.cursoudemy.repositories.CategoriaRepository;
 import com.br.cursoudemy.services.exceptions.ObjectNotFoundException;
 
-
 @Service
 public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	public Optional<Categoria> buscarPorId(Integer id)  {
+	public Optional<Categoria> find(Integer id)  {
 	 Optional<Categoria> categoria = categoriaRepository.findById(id);
 	 
 	 if (!categoria.isPresent()) {
@@ -25,10 +24,14 @@ public class CategoriaService {
 	    return categoria; 
 	}
 	
-	public Categoria salvar(Categoria categoria) {
-		 Categoria categoriaCreated = categoriaRepository.save(categoria);
+	public Categoria insert(Categoria categoria) {
+		return  categoriaRepository.save(categoria);
 		 
-		 return categoriaCreated;
+	}
+	
+	public Categoria update(Categoria categoria) {
+		find(categoria.getId());
+		return categoriaRepository.save(categoria);
 	}
 
 }
