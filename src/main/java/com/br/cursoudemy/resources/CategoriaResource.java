@@ -32,7 +32,6 @@ public class CategoriaResource {
 	private CategoriaService categoriaService;
 	
 	@GetMapping
-	@RequestMapping(value = "/")
 	public ResponseEntity<List<CategoriaDTO>> findAll(){
 		List<CategoriaDTO> listaCategorias = categoriaService.findAll();
 		

@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -14,9 +15,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.br.cursoudemy.DTO.ClienteDTO;
 import com.br.cursoudemy.entities.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cliente implements Serializable {
@@ -31,8 +32,8 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipocliente;
 	
-	@JsonManagedReference
-	@OneToMany(mappedBy = "cliente")
+	
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
@@ -53,6 +54,12 @@ public class Cliente implements Serializable {
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipocliente = tipoCliente.getCodigo();
+	}
+	
+	public Cliente(ClienteDTO clienteDTO) {
+		this.id = clienteDTO.getId();
+		this.nome = clienteDTO.getNome();
+		this.email = clienteDTO.getEmail();
 	}
 	
 	public String getNome() {
@@ -93,6 +100,22 @@ public class Cliente implements Serializable {
 
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
+
+	public Set<String> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(Set<String> telefones) {
+		this.telefones = telefones;
 	}
 
 	@Override
